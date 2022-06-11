@@ -1,5 +1,5 @@
 .label {
-    margin-top: 3px;
+    margin-top: 8px;
 }
 
 .image {
@@ -58,7 +58,7 @@
     align-items: center;
     max-width: 256px;
     border-radius: 2px;
-    padding: 13px;
+    padding: 12px;
     background-color: var(--off-white);
     font-family: Arial, Helvetica, sans-serif;
     color: black;
