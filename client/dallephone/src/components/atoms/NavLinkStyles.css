@@ -1,0 +1,12 @@
+.navButton {
+    color: var(--font-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0px 0.3rem;
+    cursor: pointer;
+    letter-spacing: -0.03rem;
+  }
+  
+  .navButton:hover {
+    color: var(--secondary-color);
+  }

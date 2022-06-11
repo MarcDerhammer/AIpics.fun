@@ -1,0 +1,70 @@
+.box {
+    background: var(--secondary-color);
+    padding: 20px;
+    text-align: center;
+    font-weight: 900;
+    font-family: arial;
+    position: relative;
+    color: white;
+    border-radius: 20px;
+}
+
+.topRight:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid var(--secondary-color);
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--secondary-color);
+    border-bottom: 10px solid transparent;
+    right: -19px;
+    top: 6px;
+}
+
+.topLeft:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid var(--secondary-color);
+    border-top: 10px solid var(--secondary-color);
+    border-bottom: 10px solid transparent;
+    left: -19px;
+    top: 18px;
+}
+
+.bottomLeft:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid var(--secondary-color);
+    border-right: 10px solid transparent;
+    border-top: 10px solid var(--secondary-color);
+    ;
+    border-bottom: 10px solid transparent;
+    left: 19px;
+    bottom: -19px;
+}
+
+.bottomRight:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    border-left: 10px solid transparent;
+    border-right: 10px solid var(--secondary-color);
+    border-top: 10px solid var(--secondary-color);
+    border-bottom: 10px solid transparent;
+    right: 19px;
+    bottom: -19px;
+}
+
+.author {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--font-color);
+    margin-right: 20px;
+}
