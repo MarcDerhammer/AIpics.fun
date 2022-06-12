@@ -5,6 +5,7 @@ import Home from './components/screens/Home';
 import Header from './components/organisms/Header';
 import Dallephone from './components/screens/Dallephone';
 import packageInfo from '../package.json';
+import SignIn from './components/screens/SignIn';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dallephone" element={<Dallephone />} />
-          <Route path="/about" element={<Home />} />
+          <Route path="/login" element={<SignIn />} />
         </Routes>
       </div>
       <span style={{
