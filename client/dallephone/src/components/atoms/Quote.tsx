@@ -16,7 +16,7 @@ const Quote = ({ text, type = 'topLeft', authorComponent }: QuoteProps) => {
             <div className="author">
                 {authorComponent}
             </div>
-            <div className={'box ' + type}>{text}</div>
+            {text && <div className={'box ' + type}>{text}</div>}
         </div>
   );
 };
