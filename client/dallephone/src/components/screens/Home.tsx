@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PromptInput from '../atoms/PromptInput';
 import Quote from '../atoms/Quote';
+import Polaroid from '../molecules/Polaroid';
 import './Home.css';
 
 const Home = () => {
   const [generating, setGenerating] = useState(false);
   const [prompt, setPrompt] = useState('');
   const [base64Img, setBase64Img] = useState('');
+  const [robotText, setRobotText] = useState('what would you like to see?');
 
   const generateImage = async (text: string) => {
     if (!text) {
@@ -15,6 +17,7 @@ const Home = () => {
     if (generating) {
       return;
     }
+    setRobotText(`i am generating "${text}" ... gimme a sec`);
     setGenerating(true);
     try {
       const response = await fetch('https://dalle.marcapi.com/dalle/', {
@@ -33,11 +36,11 @@ const Home = () => {
       const image: Blob = await response.blob();
       setBase64Img(URL.createObjectURL(image));
       setPrompt(text);
+      setRobotText('what do you want to see next?');
     } catch (error) {
-      alert('There was an error...');
+      setRobotText('there was a problem!  i have alerted the authorities');
       console.error(error);
       setBase64Img('');
-      setPrompt('');
     } finally {
       setGenerating(false);
     }
@@ -50,7 +53,7 @@ const Home = () => {
       alignItems: 'center'
     }}>
       <Quote authorComponent={'🤖'}
-        text={(generating ? '...' : 'what would you like to see?')} />
+        text={robotText} />
       <PromptInput style={{
         marginTop: '15px',
         marginBottom: '15px'
@@ -60,10 +63,11 @@ const Home = () => {
         }} />
       {
         base64Img && !generating &&
-        (<div className='imageContainer' >
-          <img className="image" src={base64Img} alt={prompt} />
-          <label className="label">{prompt}</label>
-        </div>
+        (<Polaroid
+          slideEffect={true}
+          fadeInEffect={true}
+          base64Img={base64Img}
+          label={prompt} />
         )
       }
       {
