@@ -8,7 +8,8 @@ type PromptInputProps = {
     style?: React.CSSProperties;
 };
 
-const PromptInput = ({ style, onSubmit, placeholder, generating }: PromptInputProps) => {
+const PromptInput = ({ style, onSubmit, placeholder, generating }:
+  PromptInputProps) => {
   return (
         <div style={{
           display: 'flex',
@@ -17,7 +18,8 @@ const PromptInput = ({ style, onSubmit, placeholder, generating }: PromptInputPr
           justifyContent: 'center',
           ...style
         }}>
-            <textarea className="input" id="prompt" disabled={generating} style={{
+            <textarea className="input" id="prompt"
+            disabled={generating} style={{
               borderRadius: '5px',
               padding: '5px',
               maxWidth: '300px'
@@ -28,7 +30,8 @@ const PromptInput = ({ style, onSubmit, placeholder, generating }: PromptInputPr
               }
             }} placeholder={placeholder} />
             <button className="button" onClick={() => {
-              const element = document.getElementById('prompt') as HTMLTextAreaElement;
+              const element =
+                document.getElementById('prompt') as HTMLTextAreaElement;
               onSubmit(element.value);
             }} disabled={generating} style={{
               borderRadius: '5px',
