@@ -2,3 +2,4 @@
 server/node_modules/
 client/dallephone/.firebase/hosting.YnVpbGQ.cache
 server/config.json
+client/dallephone/.env
