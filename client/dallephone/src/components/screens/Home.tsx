@@ -44,35 +44,37 @@ const Home = () => {
   };
 
   return (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-            <Quote authorComponent={'🤖'} text={(generating ? '...' : 'what would you like to see?')} />
-            <PromptInput style={{
-              marginTop: '15px',
-              marginBottom: '15px'
-            }} generating={generating} placeholder='a happy robot' onSubmit={(val) => {
-              generateImage(val.trim());
-            }} />
-            {
-                base64Img && !generating &&
-                (<div className='imageContainer' >
-                    <img className="image" src={base64Img} alt={prompt} />
-                    <label className="label">{prompt}</label>
-                </div>
-                )
-            }
-            {
-                generating &&
-                <h2 className="thinking">🤔</h2>
-            }
-            {
-                !generating && base64Img && (<div className="flash" />)
-            }
-
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
+      <Quote authorComponent={'🤖'}
+        text={(generating ? '...' : 'what would you like to see?')} />
+      <PromptInput style={{
+        marginTop: '15px',
+        marginBottom: '15px'
+      }} generating={generating}
+        placeholder='a happy robot' onSubmit={(val) => {
+          generateImage(val.trim());
+        }} />
+      {
+        base64Img && !generating &&
+        (<div className='imageContainer' >
+          <img className="image" src={base64Img} alt={prompt} />
+          <label className="label">{prompt}</label>
         </div>
+        )
+      }
+      {
+        generating &&
+        <h2 className="thinking">🤔</h2>
+      }
+      {
+        !generating && base64Img && (<div className="flash" />)
+      }
+
+    </div>
   );
 };
 
