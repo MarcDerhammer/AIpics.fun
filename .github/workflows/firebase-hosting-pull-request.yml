@@ -17,3 +17,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_DALLEPHONE_2ED55 }}'
           projectId: dallephone-2ed55
+          entryPoint: ./client/dallephone
