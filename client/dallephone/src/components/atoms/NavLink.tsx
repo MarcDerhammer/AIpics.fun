@@ -9,12 +9,12 @@ type NavLinkProps = {
 }
 
 const NavLink = ({ text, to }: NavLinkProps) => {
-    const navigate = useNavigate();
-    return (
+  const navigate = useNavigate();
+  return (
         <span className="navButton" onClick={() => {
-            navigate(to);
+          navigate(to);
         }}>{text}</span>
-    );
+  );
 };
 
 export default NavLink;

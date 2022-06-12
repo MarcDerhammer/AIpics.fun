@@ -7,11 +7,11 @@ import Dallephone from './components/screens/Dallephone';
 import packageInfo from '../package.json';
 import SignIn from './components/screens/SignIn';
 
-function App() {
+function App () {
   return (
     <div style={{
       maxWidth: '1000px',
-      margin: '0 auto',
+      margin: '0 auto'
     }}>
       <Header />
       <div style={{

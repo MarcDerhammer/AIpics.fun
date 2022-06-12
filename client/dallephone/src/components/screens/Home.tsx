@@ -4,58 +4,57 @@ import Quote from '../atoms/Quote';
 import './Home.css';
 
 const Home = () => {
-    const [generating, setGenerating] = useState(false);
-    const [prompt, setPrompt] = useState('');
-    const [base64Img, setBase64Img] = useState('');
+  const [generating, setGenerating] = useState(false);
+  const [prompt, setPrompt] = useState('');
+  const [base64Img, setBase64Img] = useState('');
 
-    const generateImage = async (text: string) => {
-        if (!text) {
-            return;
-        }
-        if (generating) {
-            return;
-        }
-        setGenerating(true);
-        try {
-            const response = await fetch('https://dalle.marcapi.com/dalle/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    text,
-                    num_images: 1,
-                })
-            });
-            if (response.status !== 200) {
-                throw new Error('Error');
-            }
-            const image: Blob = await response.blob()
-            setBase64Img(URL.createObjectURL(image));
-            setPrompt(text);
-        } catch (error) {
-            alert('There was an error...');
-            console.error(error);
-            setBase64Img('');
-            setPrompt('');
-        }
-        finally {
-            setGenerating(false);
-        }
-    };
+  const generateImage = async (text: string) => {
+    if (!text) {
+      return;
+    }
+    if (generating) {
+      return;
+    }
+    setGenerating(true);
+    try {
+      const response = await fetch('https://dalle.marcapi.com/dalle/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          text,
+          num_images: 1
+        })
+      });
+      if (response.status !== 200) {
+        throw new Error('Error');
+      }
+      const image: Blob = await response.blob();
+      setBase64Img(URL.createObjectURL(image));
+      setPrompt(text);
+    } catch (error) {
+      alert('There was an error...');
+      console.error(error);
+      setBase64Img('');
+      setPrompt('');
+    } finally {
+      setGenerating(false);
+    }
+  };
 
-    return (
+  return (
         <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
         }}>
-            <Quote authorComponent={'🤖'} text={(generating ? '...' : "what would you like to see?")} />
+            <Quote authorComponent={'🤖'} text={(generating ? '...' : 'what would you like to see?')} />
             <PromptInput style={{
-                marginTop: '15px',
-                marginBottom: '15px',
+              marginTop: '15px',
+              marginBottom: '15px'
             }} generating={generating} placeholder='a happy robot' onSubmit={(val) => {
-                generateImage(val.trim());
+              generateImage(val.trim());
             }} />
             {
                 base64Img && !generating &&
@@ -74,9 +73,7 @@ const Home = () => {
             }
 
         </div>
-    );
-}
+  );
+};
 
 export default Home;
-
-

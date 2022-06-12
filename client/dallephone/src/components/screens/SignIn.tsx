@@ -2,12 +2,12 @@ import React from 'react';
 import SignInButton from '../atoms/SignInButton';
 
 const SignIn = () => {
-    return (
+  return (
         <>
             <SignInButton onClick={() => {
-                alert('hey');
+              alert('hey');
             }} type='Google' />
         </>
-    );
-}
+  );
+};
 export default SignIn;
