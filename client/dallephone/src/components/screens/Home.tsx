@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PromptInput from '../atoms/PromptInput';
-import SignInButton from '../atoms/SignInButton';
 import Quote from '../atoms/Quote';
 import './Home.css';
 
