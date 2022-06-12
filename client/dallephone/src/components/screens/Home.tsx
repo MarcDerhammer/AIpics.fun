@@ -67,7 +67,8 @@ const Home = () => {
           slideEffect={true}
           fadeInEffect={true}
           base64Img={base64Img}
-          label={prompt} />
+          label={prompt}
+          mode='single' />
         )
       }
       {
