@@ -1,6 +1,6 @@
 {
   "name": "dallephone",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^1.35.3",
