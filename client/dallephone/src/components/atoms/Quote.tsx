@@ -8,17 +8,17 @@ type QuoteProps = {
 }
 
 const Quote = ({ text, type = 'topLeft', authorComponent }: QuoteProps) => {
-    return (
+  return (
         <div style={{
-            display: 'flex',
-            flexDirection: 'row'
+          display: 'flex',
+          flexDirection: 'row'
         }}>
             <div className="author">
                 {authorComponent}
             </div>
-            <div className={"box " + type}>{text}</div>
+            <div className={'box ' + type}>{text}</div>
         </div>
-    );
-}
+  );
+};
 
 export default Quote;
