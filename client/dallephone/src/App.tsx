@@ -12,6 +12,7 @@ import NavLink from './components/atoms/NavLink';
 import { user, onAuthChange } from './database/database';
 import { userContext } from './userContext';
 import { User } from '@supabase/supabase-js';
+import UserScreen from './components/screens/UserScreen';
 
 function App () {
   const [currentUser, setCurrentUser] = React.useState<User | null>(null);
@@ -40,6 +41,7 @@ function App () {
             <Route path="/login" element={<SignIn />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/user/" element={<UserScreen />} />
           </Routes>
         </div>
         <span className="absolute bottom right feet">
