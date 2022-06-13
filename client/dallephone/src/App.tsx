@@ -44,10 +44,10 @@ function App () {
             <Route path="/user/" element={<UserScreen />} />
           </Routes>
         </div>
-        <span className="absolute bottom right feet">
+        <span className="fixed bottom right feet">
           v{packageInfo.version}
         </span>
-        <div className="absolute bottom left feet">
+        <div className="fixed bottom left feet">
           <NavLink to="/terms" text="Terms of Use" />&nbsp;|&nbsp;
           <NavLink to="/privacypolicy" text="Privacy Policy" />
         </div>
