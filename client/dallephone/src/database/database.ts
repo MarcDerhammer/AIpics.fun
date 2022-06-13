@@ -11,6 +11,10 @@ export const user = () => {
   return supabase.auth.user();
 };
 
+export const logout = () => {
+  return supabase.auth.signOut();
+};
+
 export const onAuthChange = (callback: (ev:string) => void) => {
   supabase.auth.onAuthStateChange((ev, session) => {
     if (ev === 'SIGNED_IN') {

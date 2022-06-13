@@ -11,6 +11,8 @@ const SignIn = () => {
       }} type='Google' />
       <p>By signing in, you agree to our <a href="/terms">Terms of Use</a>
       &nbsp;and have read our <a href="/privacypolicy">Privacy Policy</a></p>
+      <p>Note: It might look like &quot;scnmnqpqvbmlqsswoipy.supabase.co&quot;
+        until I get Google to verify this site.  If you see that, it is OK.</p>
     </>
   );
 };

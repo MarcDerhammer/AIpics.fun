@@ -7,7 +7,7 @@ type UserNameProps = {
 
 const UserName = ({ user }: UserNameProps) => {
   return (
-    <NavLink to={`/user/${user?.id}`}
+    <NavLink to={'/user/'}
       text={user.user_metadata?.name.toLowerCase()} />
   );
 };
