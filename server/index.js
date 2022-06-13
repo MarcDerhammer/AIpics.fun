@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 import axios from 'axios';
 import cors from 'cors';
 const app = express();
-import config from './config.json';
+import config from './config.js';
+import { supabaseAdmin } from './supabaseClient.js';
 const port = config.port;
 
 app.use(bodyParser.json());
@@ -16,8 +17,22 @@ app.get('/ping', (req, res) => {
 app.post('/dalle', async (req, res) => {
     // get json from request
     const json = req.body;
-    console.log(json);
     const text = req.body.text;
+    const headers = req.headers;
+
+    if (!headers || !headers.authorization) {
+        return res.status(401).send('Unauthorized');
+    }
+
+    // lets lookup this user
+    const getUser = await supabaseAdmin.auth.api.getUser(
+        headers.authorization.replace("Bearer ", ""),
+    );
+
+    if (!getUser.data || getUser.error || !getUser.data.id) {
+        return res.status(401).send('Unauthorized');
+    }
+
     const num_images = req.body.num_images;
     if (!text || !num_images) {
         return res.status(400).send('Missing parameters');
@@ -29,7 +44,7 @@ app.post('/dalle', async (req, res) => {
             num_images: 1,
             api_key: config.apikey
         }
-    ).then(response => {
+    ).then(async (response) => {
         if (!response.data) {
             return res.status(500).send('Error');
         }
@@ -39,8 +54,22 @@ app.post('/dalle', async (req, res) => {
                 'Content-Type': 'image/png',
                 'Content-Length': img.length
             });
+            const insert = await supabaseAdmin.from('image').insert({
+                creator: getUser.data.id,
+                input: text,
+                public: false
+            });
+            const id = insert.data[0].id;
+            const imageUpload = await supabaseAdmin
+                .storage
+                .from('images')
+                .upload(id, img, {
+                    cacheControl: '36000',
+                    contentType: 'image/png'
+                });
             return res.end(img);
         }
+        return res.status(500).send('Error');
     }).catch(error => {
         console.log(error);
         return res.status(500).send('Error');

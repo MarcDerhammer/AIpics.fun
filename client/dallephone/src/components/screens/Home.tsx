@@ -17,13 +17,19 @@ const Home = () => {
     if (generating) {
       return;
     }
+    const token = localStorage.getItem('supabase.auth.token');
+    if (!token) {
+      setRobotText('you must log in!');
+      return;
+    }
     setRobotText(`i am generating "${text}" ... gimme a sec`);
     setGenerating(true);
     try {
       const response = await fetch('https://dalle.marcapi.com/dalle/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          authorization: JSON.parse(token).currentSession.access_token
         },
         body: JSON.stringify({
           text,
