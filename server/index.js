@@ -50,10 +50,6 @@ app.post('/dalle', async (req, res) => {
         }
         if (response.data) {
             const img = Buffer.from(response.data[0], 'base64');
-            res.writeHead(200, {
-                'Content-Type': 'image/png',
-                'Content-Length': img.length
-            });
             const insert = await supabaseAdmin.from('image').insert({
                 creator: getUser.data.id,
                 input: text,
@@ -67,7 +63,13 @@ app.post('/dalle', async (req, res) => {
                     cacheControl: '36000',
                     contentType: 'image/png'
                 });
-            return res.end(img);
+            if (imageUpload.error || !id) {
+                return res.status(500).send('Error');
+            }
+            return res.status(200).send({
+                id,
+                text
+            });
         }
         return res.status(500).send('Error');
     }).catch(error => {

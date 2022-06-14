@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { user } from '../../database/database';
 import PromptInput from '../atoms/PromptInput';
 import Quote from '../atoms/Quote';
 import Polaroid from '../molecules/Polaroid';
 import './Home.css';
+import NavLink from '../atoms/NavLink';
 
 const Home = () => {
   const [generating, setGenerating] = useState(false);
   const [prompt, setPrompt] = useState('');
-  const [base64Img, setBase64Img] = useState('');
+  const [imageId, setImageId] = useState('');
   const [robotText, setRobotText] = useState('what would you like to see?');
 
   const generateImage = async (text: string) => {
@@ -39,14 +41,14 @@ const Home = () => {
       if (response.status !== 200) {
         throw new Error('Error');
       }
-      const image: Blob = await response.blob();
-      setBase64Img(URL.createObjectURL(image));
-      setPrompt(text);
+      const data = await response.json();
+      setImageId(data.id);
+      setPrompt(data.text);
       setRobotText('what do you want to see next?');
     } catch (error) {
       setRobotText('there was a problem!  i have alerted the authorities');
       console.error(error);
-      setBase64Img('');
+      setImageId('');
     } finally {
       setGenerating(false);
     }
@@ -68,13 +70,17 @@ const Home = () => {
           generateImage(val.trim());
         }} />
       {
-        base64Img && !generating &&
+        imageId && !generating &&
         (<Polaroid
           slideEffect={true}
           fadeInEffect={true}
-          base64Img={base64Img}
+          imageId={imageId}
           label={prompt}
-          mode='single' />
+          mode='single'
+          creator={user()?.id}
+          onDelete={() => {
+            setImageId('');
+          }} />
         )
       }
       {
@@ -82,9 +88,16 @@ const Home = () => {
         <h2 className="thinking">🤔</h2>
       }
       {
-        !generating && base64Img && (<div className="flash" />)
+        !generating && imageId && (<div className="flash" />)
       }
-
+      {
+        !generating && !imageId && (
+          <div>
+            <span>need inspiration?  check out the
+                <NavLink to="/gallery" text="public gallery" /></span>
+          </div>
+        )
+      }
     </div>
   );
 };
