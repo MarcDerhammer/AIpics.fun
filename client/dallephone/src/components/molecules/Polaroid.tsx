@@ -114,7 +114,7 @@ const Polaroid = ({
                   `${slideEffect ? 'slide' : ''}`} >
                 <img
                     id={imageDomId}
-                    className={fadeInEffect ? 'fade' : ''}
+                    className={'image ' + (fadeInEffect ? 'fade' : '')}
                     src={imageUrl} alt={label} />
                 <label className='label'>
                     {label}

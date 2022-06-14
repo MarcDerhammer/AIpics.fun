@@ -15,6 +15,12 @@
     margin: 10px;
 }
 
+.image {
+    width: 256px;
+    height: 256px;
+    background-color: grey;
+}
+
 .label {
     margin-top: 8px;
 }
