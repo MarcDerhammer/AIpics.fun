@@ -13,6 +13,7 @@ import { user, onAuthChange } from './database/database';
 import { userContext } from './userContext';
 import { User } from '@supabase/supabase-js';
 import UserScreen from './components/screens/UserScreen';
+import Gallery from './components/screens/Gallery';
 
 function App () {
   const [currentUser, setCurrentUser] = React.useState<User | null>(null);
@@ -39,6 +40,7 @@ function App () {
             <Route path="/" element={<Home />} />
             <Route path="/dallephone" element={<Dallephone />} />
             <Route path="/login" element={<SignIn />} />
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/user/" element={<UserScreen />} />

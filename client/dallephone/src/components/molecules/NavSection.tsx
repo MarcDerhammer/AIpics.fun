@@ -10,8 +10,8 @@ const NavSection = () => {
           flexDirection: 'row',
           alignItems: 'center'
         }}>
-            <NavLink to="/" text="generate" />|
-            <NavLink to="/dallephone" text="dallephone" />|
+            <NavLink to="/" text="home" />|
+            <NavLink to="/gallery" text="gallery" />|
             <userContext.Consumer>
                 {user => user && user.id
                   ? <UserName user={user} />

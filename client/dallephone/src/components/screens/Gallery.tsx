@@ -1,17 +1,15 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { logout, showMyPhotos } from '../../database/database';
+import { showAllPublic } from '../../database/database';
 import Polaroid from '../molecules/Polaroid';
 import './UserScreen.css';
 
-const UserScreen = () => {
-  const navigate = useNavigate();
+const Gallery = () => {
   const [page, setPage] = React.useState(0);
   const [photos, setPhotos] = React.useState<any[]>([]);
 
   useEffect(() => {
     (async () => {
-      const photos = await showMyPhotos({
+      const photos = await showAllPublic({
         limit: 8,
         offset: page * 10,
         orderBy: 'created_at',
@@ -29,14 +27,7 @@ const UserScreen = () => {
           alignItems: 'center',
           marginBottom: '20px'
         }}>
-          <span style={{
-            cursor: 'pointer',
-            fontWeight: 'bold'
-          }} onClick={async () => {
-            await logout();
-            navigate('/');
-          }}>Logout</span>
-          <h2>your photos:</h2>
+          <h2>public gallery:</h2>
             <div style={{
               display: 'flex',
               flexDirection: 'row',
@@ -84,4 +75,4 @@ const UserScreen = () => {
   );
 };
 
-export default UserScreen;
+export default Gallery;
