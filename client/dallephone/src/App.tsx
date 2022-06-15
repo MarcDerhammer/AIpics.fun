@@ -50,8 +50,8 @@ function App () {
           v{packageInfo.version}
         </span>
         <div className="fixed bottom left feet">
-          <NavLink to="/terms" text="Terms of Use" />&nbsp;|&nbsp;
-          <NavLink to="/privacypolicy" text="Privacy Policy" />
+          <NavLink to="/terms" text="terms of use" />&nbsp;|&nbsp;
+          <NavLink to="/privacypolicy" text="privacy policy" />
         </div>
       </div>
     </userContext.Provider>

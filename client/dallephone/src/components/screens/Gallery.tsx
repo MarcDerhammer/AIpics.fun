@@ -54,37 +54,35 @@ const Gallery = () => {
   }, [page]);
 
   return (
-    <div>
-      <div style={{
-        display: 'flex',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center'
-      }}>
-        {
-          photos.map((photo: any) => {
-            return (
-              <Polaroid
-                style={{
-                  transform:
-                    `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
-                  marginBottom: '20px'
-                }}
-                mode='grid'
-                publicImage={photo.public}
-                key={photo.id}
-                imageId={photo.id}
-                label={photo.input}
-                creator={photo.creator}
-                onDelete={() => {
-                  setPhotos(photos.filter((p: any) => p.id !== photo.id));
-                }} />
-            );
-          })
-        }
-      </div>
+    <div style={{
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    }}>
       {
-        loading && <div>Loading...</div>
+        photos.map((photo: any) => {
+          return (
+            <Polaroid
+              style={{
+                transform:
+                  `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
+                marginBottom: '20px'
+              }}
+              mode='grid'
+              publicImage={photo.public}
+              key={photo.id}
+              imageId={photo.id}
+              label={photo.input}
+              creator={photo.creator}
+              onDelete={() => {
+                setPhotos(photos.filter((p: any) => p.id !== photo.id));
+              }} />
+          );
+        })
+      }
+      {
+        loading && <div>loading...</div>
       }
     </div>
   );

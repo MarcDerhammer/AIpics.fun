@@ -99,7 +99,7 @@ const UserScreen = () => {
         }
       </div>
       {
-        loading && <div>Loading...</div>
+        loading && <div>loading...</div>
       }
     </div>
   );
