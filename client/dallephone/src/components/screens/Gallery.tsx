@@ -54,7 +54,7 @@ const Gallery = () => {
   }, [page]);
 
   return (
-    <div style={{
+    <div className="photoContainer" style={{
       display: 'flex',
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -65,8 +65,6 @@ const Gallery = () => {
           return (
             <Polaroid
               style={{
-                transform:
-                  `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
                 marginBottom: '20px'
               }}
               mode='grid'
