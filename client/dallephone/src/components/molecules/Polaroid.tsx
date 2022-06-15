@@ -88,6 +88,7 @@ const Polaroid = ({
   const shareImage = () => {
     const image =
       document.getElementById(id) as HTMLElement;
+    image.parentElement?.classList.remove('rotated');
     html2Canvas(image, {
       allowTaint: true,
       useCORS: true
@@ -104,13 +105,14 @@ const Polaroid = ({
             title: label,
             files
           });
+          image.parentElement?.classList.add('rotated');
         });
       });
   };
   return (
-        <div style={style} className="container">
+        <div style={style} className="container rotated">
             <div id={id}
-                className={'imageContainer grow ' +
+                className={'imageContainer grow' +
                   `${slideEffect ? 'slide' : ''}`} >
                 <img
                     id={imageDomId}

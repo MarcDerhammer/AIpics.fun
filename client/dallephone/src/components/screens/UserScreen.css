@@ -3,3 +3,19 @@
     font-weight: bold;
     margin: 8px;
 }
+
+.photoContainer > .rotated:nth-child(4n+1) {
+    transform: rotate(3deg)
+}
+
+.photoContainer > .rotated:nth-child(4n+2) {
+    transform: rotate(-4deg)
+}
+
+.photoContainer > .rotated:nth-child(4n+3) {
+    transform: rotate(2deg)
+}
+
+.photoContainer > .rotated:nth-child(4n+4) {
+    transform: rotate(-3deg)
+}

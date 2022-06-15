@@ -70,7 +70,7 @@ const UserScreen = () => {
         navigate('/');
       }}>Logout</span>
       <h2>your photos:</h2>
-      <div style={{
+      <div className="photoContainer" style={{
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -81,8 +81,6 @@ const UserScreen = () => {
             return (
               <Polaroid
                 style={{
-                  transform:
-                    `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
                   marginBottom: '20px'
                 }}
                 mode='grid'

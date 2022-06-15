@@ -65,8 +65,6 @@
     opacity: 0.3;
 }
 
-
-
 .controlRowHidden {
     display: none;
 }
@@ -77,6 +75,10 @@
 
 .grow:hover {
     transform: scale(1.04);
+}
+
+.container:hover {
+    transform: rotate(0deg);
 }
 
 .container:hover .controlRow {
