@@ -112,7 +112,7 @@ const Polaroid = ({
   return (
         <div style={style} className="container rotated">
             <div id={id}
-                className={'imageContainer grow' +
+                className={'imageContainer grow ' +
                   `${slideEffect ? 'slide' : ''}`} >
                 <img
                     id={imageDomId}
