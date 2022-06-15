@@ -9,7 +9,7 @@ const Gallery = () => {
   const [moreExists, setMoreExists] = React.useState(true);
   const [loading, setLoading] = React.useState(false);
 
-  let scrollTimeout:any;
+  let scrollTimeout: any;
 
   const handleScroll = () => {
     if (!moreExists) {
@@ -55,38 +55,38 @@ const Gallery = () => {
 
   return (
     <div>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'center'
-            }}>
-            {
-              photos.map((photo: any) => {
-                return (
-                  <Polaroid
-                    style={{
-                      transform:
-                      `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
-                      marginBottom: '20px'
-                    }}
-                    mode='grid'
-                    publicImage={photo.public}
-                    key={photo.id}
-                    imageId={photo.id}
-                    label={photo.input}
-                    creator={photo.creator}
-                    onDelete={() => {
-                      setPhotos(photos.filter((p: any) => p.id !== photo.id));
-                    }} />
-                );
-              })
-          }
-          </div>
-          {
-            loading && <div>Loading...</div>
-          }
-        </div>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
+      }}>
+        {
+          photos.map((photo: any) => {
+            return (
+              <Polaroid
+                style={{
+                  transform:
+                    `rotate(${Math.floor(Math.random() * 10) - 4}deg)`,
+                  marginBottom: '20px'
+                }}
+                mode='grid'
+                publicImage={photo.public}
+                key={photo.id}
+                imageId={photo.id}
+                label={photo.input}
+                creator={photo.creator}
+                onDelete={() => {
+                  setPhotos(photos.filter((p: any) => p.id !== photo.id));
+                }} />
+            );
+          })
+        }
+      </div>
+      {
+        loading && <div>Loading...</div>
+      }
+    </div>
   );
 };
 
