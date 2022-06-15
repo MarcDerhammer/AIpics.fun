@@ -4,7 +4,7 @@ import './SignIn.css';
 
 type SignInProps = {
   onClick: () => void;
-  type: 'Google'; // | 'Facebook' | whatever...
+  type: 'google'; // | 'Facebook' | whatever...
 }
 
 const SignInButton = ({ onClick, type }: SignInProps) => {
@@ -16,7 +16,7 @@ const SignInButton = ({ onClick, type }: SignInProps) => {
       <span style={{
         margin: '5px'
       }}>
-        Sign In with {type}
+        sign in with {type}
       </span>
     </button>
   );
