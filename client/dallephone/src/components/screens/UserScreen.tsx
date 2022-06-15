@@ -8,16 +8,49 @@ const UserScreen = () => {
   const navigate = useNavigate();
   const [page, setPage] = React.useState(0);
   const [photos, setPhotos] = React.useState<any[]>([]);
+  const [moreExists, setMoreExists] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
+
+  let scrollTimeout:any;
+
+  const handleScroll = () => {
+    if (!moreExists) {
+      return;
+    }
+    clearInterval(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      if (window.innerHeight + document.documentElement.scrollTop + 600 <
+        document.documentElement.offsetHeight) return;
+      setPage(prevPage => prevPage + 1);
+    }, 250);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     (async () => {
-      const photos = await showMyPhotos({
-        limit: 8,
-        offset: page * 10,
+      if (!moreExists) {
+        return;
+      }
+      setLoading(true);
+      const newPhotos = await showMyPhotos({
+        limit: 11,
+        offset: page * 12,
         orderBy: 'created_at',
         ascending: false
       });
-      setPhotos(photos);
+      setLoading(false);
+      if (newPhotos.length === 0) {
+        setMoreExists(false);
+        return;
+      }
+      setPhotos(photos.concat(newPhotos));
+      handleScroll();
     }
     )();
   }, [page]);
@@ -65,21 +98,9 @@ const UserScreen = () => {
               })
           }
           </div>
-          <div>
-            {
-              page > 0 &&
-              <span className="paging" onClick={() => {
-                setPage(page - 1);
-              }
-              }>&lt;previous page</span>
-            }
-            {
-              <span className="paging" onClick={() => {
-                setPage(page + 1);
-              }
-              }>next page&gt;</span>
-            }
-          </div>
+          {
+            loading && <div>Loading...</div>
+          }
         </div>
   );
 };
