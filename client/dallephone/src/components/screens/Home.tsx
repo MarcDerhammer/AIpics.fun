@@ -92,9 +92,29 @@ const Home = () => {
       }
       {
         !generating && !imageId && (
-          <div>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
             <span>need inspiration?  check out the
-                <NavLink to="/gallery" text="public gallery" /></span>
+              <NavLink to="/gallery" text="public gallery" /></span>
+            <hr style={{
+              marginTop: '30px',
+              width: '100%'
+            }} />
+            <h3 style={{
+              marginTop: '30px'
+            }}>what is this?</h3>
+            <span>this site uses&nbsp;
+              <a rel="noreferrer"
+                target="_blank"
+                href="https://github.com/borisdayma/dalle-mini">
+                DALL·E Mini</a>
+              &nbsp;to convert text prompts into images</span>
+            <span><br />by default, all images are private to you, but if
+              you click the eyeball icon, they will be added to the public
+              gallery</span>
           </div>
         )
       }
