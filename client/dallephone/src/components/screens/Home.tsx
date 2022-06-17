@@ -20,10 +20,6 @@ const Home = () => {
       return;
     }
     const token = localStorage.getItem('supabase.auth.token');
-    if (!token) {
-      setRobotText('you must log in!');
-      return;
-    }
     setRobotText(`i am generating "${text}" ... gimme a sec`);
     setGenerating(true);
     try {
@@ -31,13 +27,20 @@ const Home = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: JSON.parse(token).currentSession.access_token
+          authorization: token && JSON.parse(token).currentSession.access_token
         },
         body: JSON.stringify({
           text,
           num_images: 1
         })
       });
+      if (response.status === 429) {
+        setRobotText('you have reached the the anonymous limit! ' +
+          'log in or come back later');
+        setImageId('');
+        setGenerating(false);
+        return;
+      }
       if (response.status !== 200) {
         throw new Error('Error');
       }

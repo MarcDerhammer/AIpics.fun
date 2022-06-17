@@ -125,7 +125,7 @@ const Polaroid = ({
             {showControls && (<div className={'controlRow'}>
                 <img className="controlButton"
                     onClick={shareImage} src={share} alt="share" />
-                    { user()?.id === creator && (
+                    { user()?.id === creator && creator && (
                       <div>
                       <img className="controlButton"
                       onClick={removeImage} src={trash} alt="delete" />
@@ -134,8 +134,15 @@ const Polaroid = ({
                       src={isPublic ? show : hide} alt="delete" />
                       </div>
                     ) }
-
             </div>)}
+            {showControls && !creator && (
+              <div className={'controlRow'}>
+                <span>note: anonymously created images cannot be added
+                  to the gallery and will be lost when this page reloads.
+                  login to enable saving the images to your account
+                  or gallery</span>
+                  </div>
+            )}
         </div>
   );
 };
