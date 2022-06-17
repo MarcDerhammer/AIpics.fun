@@ -13,6 +13,8 @@ const SignIn = () => {
       &nbsp;and have read our <a href="/privacypolicy">privacy policy</a></p>
       <p>note: it might look like &quot;scnmnqpqvbmlqsswoipy.supabase.co&quot;
         until i get google to verify this site.  if you see that, it is ok.</p>
+      <p>your public information could be used to represent you when sharing
+        images publicly</p>
     </>
   );
 };
