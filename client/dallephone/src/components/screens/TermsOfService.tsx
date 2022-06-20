@@ -20,7 +20,7 @@ const TermsOfService = () => {
             <p>The website creator and moderators have authority on what is considered a
                 violation of the Terms and reserve the right to terminate website access and remove
                 any offending content.</p>
-            <p>Please report any violations to <a href="mailto:dalle.fun@gmail.com">dalle.fun@gmail.com</a></p>
+            <p>Please report any violations to <a href="mailto:aipics.fun@gmail.com">aipics.fun@gmail.com</a></p>
             <p>You may not use this website if you are under the age of 13.</p>
         </div>
   );
