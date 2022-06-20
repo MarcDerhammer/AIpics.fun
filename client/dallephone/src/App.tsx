@@ -14,6 +14,7 @@ import { userContext } from './userContext';
 import { User } from '@supabase/supabase-js';
 import UserScreen from './components/screens/UserScreen';
 import Gallery from './components/screens/Gallery';
+import GoogleHome from './components/screens/GoogleHome';
 
 function App () {
   const [currentUser, setCurrentUser] = React.useState<User | null>(null);
@@ -44,6 +45,7 @@ function App () {
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/user/" element={<UserScreen />} />
+            <Route path="/googlehome" element={<GoogleHome />} />
           </Routes>
         </div>
         <span className="fixed bottom right feet">
