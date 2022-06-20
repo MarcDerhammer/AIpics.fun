@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
   return (
         <div>
             <h1>Privacy Policy</h1>
-            <p>Last updated: June 12, 2022</p>
+            <p>Last updated: June 20, 2022</p>
             <p>This Privacy Policy describes Our policies and
                 procedures on the collection,
                 use and disclosure of Your information when Youuse the Service and tells
@@ -30,7 +30,7 @@ const PrivacyPolicy = () => {
                 </li>
                 <li>
                     <p><strong>Company</strong> (referred to as either &quot;the Company&quot;,
-                        &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to dalle.fun.</p>
+                        &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to aipics.fun.</p>
                 </li>
                 <li>
                     <p><strong>Cookies</strong> are small files that are placed on Your
@@ -69,9 +69,9 @@ const PrivacyPolicy = () => {
                         infrastructure itself (for example, the duration of a page visit).</p>
                 </li>
                 <li>
-                    <p><strong>Website</strong> refers to dalle.fun, accessible from
-                        <a href="https://dalle.fun" rel="external nofollow noopener noreferrer"
-                            target="_blank">https://dalle.fun</a></p>
+                    <p><strong>Website</strong> refers to aipics.fun, accessible from
+                        <a href="https://aipics.fun" rel="external nofollow noopener noreferrer"
+                            target="_blank">https://aipics.fun</a></p>
                 </li>
                 <li>
                     <p><strong>You</strong> means the individual accessing or using the
@@ -331,7 +331,7 @@ const PrivacyPolicy = () => {
             <h1>Contact Us</h1>
             <p>If you have any questions about this Privacy Policy, You can contact us:</p>
             <ul>
-                <li>By email: dalle.fun@gmail.com</li>
+                <li>By email: aipics.fun@gmail.com</li>
             </ul>
         </div>
   );

@@ -1,1 +1,1 @@
-https://dalle.fun
+https://aipics.fun
