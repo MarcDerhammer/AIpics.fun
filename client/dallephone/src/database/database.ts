@@ -35,8 +35,8 @@ export const showPhotos = async (options: ShowPhotosOptions = {
   publicOnly: true
 }) => {
   let query = supabase.from('image')
-    .select('id, created_at, input, public, creator')
-
+    .select(`id, created_at, input, public, creator,
+    profile!image_creator_fkey(name, id, image)`)
     .eq('deleted', false)
     .range(options.offset, options.offset + options.limit)
     .order(options.orderBy, {
@@ -54,6 +54,7 @@ export const showPhotos = async (options: ShowPhotosOptions = {
   if (error) {
     console.error(error);
   }
+  console.log(data);
 
   return data;
 };
@@ -101,5 +102,52 @@ export const deleteImage = async (uuid: string) => {
     console.error(error);
     throw new Error(error.toString());
   }
+  return data;
+};
+
+export const setProfilePic = async (uuid: string) => {
+  const { data, error } = await supabase
+    .from('profile')
+    .upsert({
+      id: user()?.id,
+      image: uuid
+    });
+  if (error) {
+    console.error(error);
+    throw new Error(error.toString());
+  };
+  return data;
+};
+
+export const setUserName = async (name: string) => {
+  if (!name) {
+    return;
+  }
+  const { data, error } = await supabase
+    .from('profile')
+    .upsert({
+      id: user()?.id,
+      name
+    });
+  if (error) {
+    console.error(error);
+    throw new Error(error.toString());
+  };
+  return data;
+};
+
+export const getProfileInfo = async (uuid: string) => {
+  if (!uuid) {
+    return;
+  }
+  const { data, error } = await supabase
+    .from('profile')
+    .select('*')
+    .eq('id', uuid)
+    .maybeSingle();
+  if (error) {
+    console.error(error);
+    throw new Error(error.toString());
+  };
   return data;
 };

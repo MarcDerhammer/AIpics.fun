@@ -6,11 +6,15 @@ import './ScrollingPhotos.css';
 type PhotoProps = {
     user?: string | null;
     publicOnly?: boolean;
+    onProfilePicSelected?: (image: string) => void;
+    showCreator?: boolean;
 }
 
 const ScrollingPhotos = ({
   user = null,
-  publicOnly = true
+  publicOnly = true,
+  onProfilePicSelected = () => { },
+  showCreator = false
 }: PhotoProps) => {
   const [page, setPage] = React.useState(0);
   const [photos, setPhotos] = React.useState<any[]>([]);
@@ -63,35 +67,44 @@ const ScrollingPhotos = ({
   }, [page]);
 
   return (
-        <div className="photoContainer" style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center'
-        }}>
+        <div>
+            <div className="photoContainer" style={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'center'
+            }}>
+                {
+                    photos.map((photo: any) => {
+                      return (
+                            <Polaroid
+                                style={{
+                                  marginBottom: '20px'
+                                }}
+                                mode='grid'
+                                publicImage={photo.public}
+                                key={photo.id}
+                                imageId={photo.id}
+                                label={photo.input}
+                                creator={photo.profile}
+                                onProfilePicSelected={onProfilePicSelected}
+                                showCreator={showCreator}
+                                onDelete={() => {
+                                  setPhotos(photos.filter(
+                                    (p: any) =>
+                                      p.id !== photo.id));
+                                }} />
+                      );
+                    })
+                }
+
+            </div>
             {
-                photos.map((photo: any) => {
-                  return (
-                        <Polaroid
-                            style={{
-                              marginBottom: '20px'
-                            }}
-                            mode='grid'
-                            publicImage={photo.public}
-                            key={photo.id}
-                            imageId={photo.id}
-                            label={photo.input}
-                            creator={photo.creator}
-                            onDelete={() => {
-                              setPhotos(photos.filter(
-                                (p: any) =>
-                                  p.id !== photo.id));
-                            }} />
-                  );
-                })
-            }
-            {
-                loading && <div>loading...</div>
+                loading && <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
+                }}>loading...</div>
             }
         </div>
   );
