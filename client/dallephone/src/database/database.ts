@@ -22,56 +22,39 @@ type ShowPhotosOptions = {
   offset: number;
   orderBy: string;
   ascending: boolean;
+  filterByUser?: string | null;
+  publicOnly?: boolean;
 };
 
-export const showMyPhotos = async (options: ShowPhotosOptions = {
+export const showPhotos = async (options: ShowPhotosOptions = {
   limit: 10,
   offset: 0,
   orderBy: 'created_at',
-  ascending: false
+  ascending: false,
+  filterByUser: null,
+  publicOnly: true
 }) => {
-  if (!user()) {
-    throw new Error('User is not signed in');
-  }
-
-  const id = user()?.id;
-  if (!id) {
-    throw new Error('User id is not defined');
-  }
-
-  const { data, error } = await supabase.from('image')
+  let query = supabase.from('image')
     .select('id, created_at, input, public, creator')
-    .eq('creator', id)
+
     .eq('deleted', false)
     .range(options.offset, options.offset + options.limit)
     .order(options.orderBy, {
       ascending: options.ascending
     });
-  if (error) {
-    console.error(error);
-    throw new Error(error.toString());
-  }
-  return data;
-};
 
-export const showAllPublic = async (options: ShowPhotosOptions = {
-  limit: 10,
-  offset: 0,
-  orderBy: 'created_at',
-  ascending: false
-}) => {
-  const { data, error } = await supabase.from('image')
-    .select('id, created_at, input, public, creator')
-    .eq('public', true)
-    .eq('deleted', false)
-    .range(options.offset, options.offset + options.limit)
-    .order(options.orderBy, {
-      ascending: options.ascending
-    });
+  if (options.publicOnly) {
+    query = query.eq('public', options.publicOnly);
+  }
+  if (options.filterByUser) {
+    query = query.eq('creator', options.filterByUser);
+  }
+
+  const { data, error } = await query;
   if (error) {
     console.error(error);
-    throw new Error(error.toString());
   }
+
   return data;
 };
 

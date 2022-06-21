@@ -32,7 +32,6 @@ function App () {
   return (
     <userContext.Provider value={currentUser}>
       <div style={{
-        maxWidth: '1000px',
         margin: '0 auto'
       }}>
         <Header />
