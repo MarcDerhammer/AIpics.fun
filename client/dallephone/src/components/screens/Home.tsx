@@ -80,7 +80,10 @@ const Home = () => {
           imageId={imageId}
           label={prompt}
           mode='single'
-          creator={user()?.id}
+          creator={{
+            id: user()?.id || '',
+            name: 'you'
+          }}
           onDelete={() => {
             setImageId('');
           }} />

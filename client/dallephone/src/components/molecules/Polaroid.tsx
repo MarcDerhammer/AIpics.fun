@@ -5,20 +5,33 @@ import share from '../../icons/share.svg';
 import trash from '../../icons/trash.svg';
 import show from '../../icons/show.svg';
 import hide from '../../icons/hide.svg';
+import profilePic from '../../icons/profile-pic.svg';
+import Creator from '../molecules/Creator';
 
-import { getPublicUrl, setPublic, deleteImage, user }
+import {
+  getPublicUrl, setPublic, deleteImage, user,
+  setProfilePic
+}
   from '../../database/database';
 
+export type Profile = {
+  id: string;
+  image?: string;
+  name: string;
+}
+
 type Props = {
-    imageId?: string;
-    label?: string;
-    fadeInEffect?: boolean;
-    slideEffect?: boolean;
-    mode?: 'grid' | 'single';
-    style? : React.CSSProperties;
-    publicImage?: boolean;
-    onDelete? : () => void;
-    creator?: string;
+  imageId?: string;
+  label?: string;
+  fadeInEffect?: boolean;
+  slideEffect?: boolean;
+  mode?: 'grid' | 'single';
+  style?: React.CSSProperties;
+  publicImage?: boolean;
+  onDelete?: () => void;
+  creator?: Profile;
+  onProfilePicSelected?: (image: string) => void;
+  showCreator?: boolean;
 }
 
 const Polaroid = ({
@@ -29,10 +42,12 @@ const Polaroid = ({
   mode = 'grid',
   style,
   publicImage = false,
-  onDelete = () => {},
-  creator
+  onDelete = () => { },
+  creator,
+  onProfilePicSelected = () => { },
+  showCreator = false
 }:
-    Props) => {
+  Props) => {
   const id = useId();
   const imageDomId = useId();
   const [showControls, setShowControls] = React.useState(mode === 'grid');
@@ -62,6 +77,19 @@ const Polaroid = ({
     if (confirm(isPublic ? makePrivate : makePublic)) {
       await setPublic(imageId, !isPublic);
       setIsPublic(!isPublic);
+    }
+  };
+
+  const makeProfilePic = async () => {
+    if (!imageId) {
+      return;
+    }
+    const makeProfilePic = 'make this your profile pic?';
+    if (confirm(makeProfilePic)) {
+      const set = await setProfilePic(imageId);
+      if (set) {
+        onProfilePicSelected(imageId);
+      }
     }
   };
 
@@ -99,8 +127,8 @@ const Polaroid = ({
             return;
           }
           const files =
-          [new File([blob], `${new Date().getTime()}.png`,
-            { type: blob.type })];
+            [new File([blob], `${new Date().getTime()}.png`,
+              { type: blob.type })];
           navigator.share({
             title: label,
             files
@@ -110,40 +138,47 @@ const Polaroid = ({
       });
   };
   return (
-        <div style={style} className="container rotated">
-            <div id={id}
-                className={'imageContainer grow ' +
-                  `${slideEffect ? 'slide' : ''}`} >
-                <img
-                    id={imageDomId}
-                    className={'image ' + (fadeInEffect ? 'fade' : '')}
-                    src={imageUrl} alt={label} />
-                <label className='label'>
-                    {label}
-                </label>
-            </div>
-            {showControls && (<div className={'controlRow'}>
-                <img className="controlButton"
-                    onClick={shareImage} src={share} alt="share" />
-                    { user()?.id === creator && creator && (
-                      <div>
-                      <img className="controlButton"
-                      onClick={removeImage} src={trash} alt="delete" />
-                  <img className="controlButton"
-                      onClick={toggleVisibility}
-                      src={isPublic ? show : hide} alt="delete" />
-                      </div>
-                    ) }
-            </div>)}
-            {showControls && !creator && (
-              <div className={'controlRow'}>
-                <span>note: anonymously created images cannot be added
-                  to the gallery and will be lost when this page reloads.
-                  login to enable saving the images to your account
-                  or gallery</span>
-                  </div>
-            )}
+    <div style={style} className="container rotated">
+      <div id={id}
+        className={'imageContainer grow ' +
+          `${slideEffect ? 'slide' : ''}`} >
+        <img
+          id={imageDomId}
+          className={'image ' + (fadeInEffect ? 'fade' : '')}
+          src={imageUrl} alt={label} />
+        <label className='label'>
+          {label}
+        </label>
+      </div>
+      {showControls && (<div className={'controlRow'}>
+      {showCreator && creator && (
+              <Creator creator={creator} />)}
+        <img className="controlButton"
+          onClick={shareImage} src={share} alt="share" />
+        {user()?.id === creator?.id && creator?.name && (
+            <img className="controlButton"
+              onClick={removeImage} src={trash} alt="delete" />
+        )}
+        {user()?.id === creator?.id && creator?.name && (
+            <img className="controlButton"
+              onClick={toggleVisibility}
+              src={isPublic ? show : hide} alt="delete" />
+        )}
+        {user()?.id === creator?.id && creator?.name && (
+            <img className="controlButton"
+              onClick={makeProfilePic}
+              src={profilePic} alt="delete" />
+        )}
+      </div>)}
+      {showControls && !creator && (
+        <div className={'controlRow'}>
+          <span>note: anonymously created images cannot be added
+            to the gallery and will be lost when this page reloads.
+            login to enable saving the images to your account
+            or gallery</span>
         </div>
+      )}
+    </div>
   );
 };
 

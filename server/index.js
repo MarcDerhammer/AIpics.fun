@@ -25,7 +25,7 @@ app.post('/dalle', async (req, res) => {
 
     if (!ip) {
         return res.status(401).send('No IP address');
-    } 
+    }
 
     let userId;
 
@@ -60,12 +60,11 @@ app.post('/dalle', async (req, res) => {
             return res.status(500).send('Error');
         }
         if (response.data) {
-            const img = Buffer.from(response.data[0], 'base64');
+            const img = Buffer.from(response.data.generatedImgs[0], 'base64');
             const insert = await supabaseAdmin.from('image').insert({
                 creator: userId,
                 input: text,
-                public: false,
-                ip,
+                public: false
             });
             const id = insert.data[0].id;
             const imageUpload = await supabaseAdmin
