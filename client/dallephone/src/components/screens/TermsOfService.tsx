@@ -3,7 +3,10 @@ import React from 'react';
 
 const TermsOfService = () => {
   return (
-        <div>
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto'
+        }}>
             <h1>Terms of Use</h1>
             <p>
                 While using this site, you must adhere to our Content Policy
@@ -13,7 +16,7 @@ const TermsOfService = () => {
             </p>
             <ul>
                 <li><b>Hate:</b>&nbsp;Hateful or racist images that express or promote hate to any
-                group or individual</li>
+                    group or individual</li>
                 <li><b>Sexual:</b>&nbsp;Nudity, sexual acts, or images intended to arouse sexual excitement</li>
                 <li><b>Shocking:</b>&nbsp;&quot;Edgy&quot; images intended to shock or disgust</li>
             </ul>

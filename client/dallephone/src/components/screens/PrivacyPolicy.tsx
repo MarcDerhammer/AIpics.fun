@@ -3,7 +3,10 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-        <div>
+        <div style={{
+          maxWidth: '1000px',
+          margin: '0 auto'
+        }}>
             <h1>Privacy Policy</h1>
             <p>Last updated: June 20, 2022</p>
             <p>This Privacy Policy describes Our policies and

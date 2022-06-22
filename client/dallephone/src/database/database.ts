@@ -13,6 +13,10 @@ export const user = () => {
   return supabase.auth.user();
 };
 
+export const session = () => {
+  return supabase.auth.session();
+};
+
 export const logout = () => {
   return supabase.auth.signOut();
 };

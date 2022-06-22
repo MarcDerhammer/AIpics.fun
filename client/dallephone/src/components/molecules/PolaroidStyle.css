@@ -30,8 +30,7 @@
 }
 
 .fade {
-    animation-delay: 2s;
-    animation: fadeIn 6s ease-in;
+    animation: fadeIn 5s ease-in;
 }
 
 @keyframes slideDown {
@@ -48,11 +47,6 @@
     0% {
         filter: contrast(0%);
     }
-
-    25% {
-        filter: contrast(0%);
-    }
-
     100% {
         filter: contrast(100%);
     }

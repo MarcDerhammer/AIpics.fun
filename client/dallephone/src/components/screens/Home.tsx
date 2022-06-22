@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { user } from '../../database/database';
+import { user, session } from '../../database/database';
 import PromptInput from '../atoms/PromptInput';
 import Quote from '../atoms/Quote';
 import Polaroid from '../molecules/Polaroid';
@@ -19,15 +19,16 @@ const Home = () => {
     if (generating) {
       return;
     }
-    const token = localStorage.getItem('supabase.auth.token');
-    setRobotText(`i am generating "${text}" ... gimme a sec`);
+    const token = session()?.access_token;
+    setRobotText(`i am generating "${text}" ... just a moment`);
     setGenerating(true);
     try {
+      setImageId('');
       const response = await fetch('https://dalle.marcapi.com/dalle/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          authorization: token && JSON.parse(token).currentSession.access_token
+          authorization: token || ''
         },
         body: JSON.stringify({
           text,
@@ -73,9 +74,8 @@ const Home = () => {
           generateImage(val.trim());
         }} />
       {
-        imageId && !generating &&
+        imageId &&
         (<Polaroid
-          slideEffect={true}
           fadeInEffect={true}
           imageId={imageId}
           label={prompt}
@@ -94,7 +94,7 @@ const Home = () => {
         <h2 className="thinking">🤔</h2>
       }
       {
-        !generating && imageId && (<div className="flash" />)
+        imageId && (<div className="flash" />)
       }
       {
         !generating && !imageId && (
