@@ -111,7 +111,7 @@ const Polaroid = ({
       ?.addEventListener('animationend', () => {
         setShowControls(true);
       });
-  }, [id]);
+  }, []);
 
   const shareImage = () => {
     const image =
@@ -170,7 +170,7 @@ const Polaroid = ({
               src={profilePic} alt="delete" />
         )}
       </div>)}
-      {showControls && !creator && (
+      {showControls && !creator?.id && (
         <div className={'controlRow'}>
           <span>note: anonymously created images cannot be added
             to the gallery and will be lost when this page reloads.

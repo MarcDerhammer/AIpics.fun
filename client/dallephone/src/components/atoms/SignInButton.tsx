@@ -9,9 +9,11 @@ type SignInProps = {
 
 const SignInButton = ({ onClick, type }: SignInProps) => {
   return (
-    <button className="button" onClick={onClick}>
+    <button className="button google" onClick={onClick}>
       <img style={{
-        margin: '5px'
+        padding: '5px',
+        marginLeft: '0px',
+        backgroundColor: 'white'
       }} alt={type} src={Google} />
       <span style={{
         margin: '5px'

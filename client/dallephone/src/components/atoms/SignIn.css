@@ -3,8 +3,18 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: '30px';
+    padding: 2px;
     border-radius: '5px';
     box-shadow: 0 0 1px white;
     border: unset;
+}
+
+.google {
+    background-color: #4285F4 !important;
+}
+
+.google span {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding: 0px 8px;
 }
