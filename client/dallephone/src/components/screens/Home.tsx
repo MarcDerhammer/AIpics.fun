@@ -43,9 +43,14 @@ const Home = () => {
         return;
       }
       if (response.status !== 200) {
-        throw new Error('Error');
+        setRobotText(await response.text());
+        setImageId([]);
+        setGenerating(false);
+        return;
       }
+
       const data = await response.json();
+
       setImageId(data.ids);
       setPrompt(data.text);
       setRobotText('what do you want to see next?');
