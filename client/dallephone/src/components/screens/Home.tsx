@@ -9,7 +9,7 @@ import NavLink from '../atoms/NavLink';
 const Home = () => {
   const [generating, setGenerating] = useState(false);
   const [prompt, setPrompt] = useState('');
-  const [imageId, setImageId] = useState('');
+  const [imageId, setImageId] = useState([]);
   const [robotText, setRobotText] = useState('what would you like to see?');
 
   const generateImage = async (text: string) => {
@@ -23,7 +23,7 @@ const Home = () => {
     setRobotText(`i am generating "${text}" ... just a moment`);
     setGenerating(true);
     try {
-      setImageId('');
+      setImageId([]);
       const response = await fetch('https://dalle.marcapi.com/dalle/', {
         method: 'POST',
         headers: {
@@ -38,7 +38,7 @@ const Home = () => {
       if (response.status === 429) {
         setRobotText('you have reached the the anonymous limit! ' +
           'log in or come back later');
-        setImageId('');
+        setImageId([]);
         setGenerating(false);
         return;
       }
@@ -46,13 +46,13 @@ const Home = () => {
         throw new Error('Error');
       }
       const data = await response.json();
-      setImageId(data.id);
+      setImageId(data.ids);
       setPrompt(data.text);
       setRobotText('what do you want to see next?');
     } catch (error) {
       setRobotText('there was a problem!  i have alerted the authorities');
       console.error(error);
-      setImageId('');
+      setImageId([]);
     } finally {
       setGenerating(false);
     }
@@ -73,22 +73,30 @@ const Home = () => {
         placeholder='a happy robot' onSubmit={(val) => {
           generateImage(val.trim());
         }} />
-      {
-        imageId &&
-        (<Polaroid
-          fadeInEffect={true}
-          imageId={imageId}
-          label={prompt}
-          mode='single'
-          creator={{
-            id: user()?.id || '',
-            name: 'you'
-          }}
-          onDelete={() => {
-            setImageId('');
-          }} />
-        )
-      }
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center'
+      }}>
+        {
+          imageId && imageId.length > 0 && imageId.map((id) => {
+            return <Polaroid
+              key={id}
+              fadeInEffect={true}
+              imageId={id}
+              label={prompt}
+              mode='grid'
+              creator={{
+                id: user()?.id || '',
+                name: 'you'
+              }}
+              onDelete={() => {
+                setImageId([]);
+              }} />;
+          })
+        }
+      </div>
       {
         generating &&
         <h2 className="thinking">🤔</h2>
