@@ -115,8 +115,8 @@ const Home = () => {
             <span>this site uses&nbsp;
               <a rel="noreferrer"
                 target="_blank"
-                href="https://github.com/borisdayma/dalle-mini">
-                DALL·E Mini</a>
+                href="https://github.com/replicate/cog-stable-diffusion">
+                Stable Diffusion</a>
               &nbsp;to convert text prompts into images</span>
             <span><br />by default, all images are private to you, but if
               you click the eyeball icon, they will be added to the public
