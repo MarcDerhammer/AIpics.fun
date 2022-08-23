@@ -170,14 +170,6 @@ const Polaroid = ({
               src={profilePic} alt="delete" />
         )}
       </div>)}
-      {showControls && !creator?.id && (
-        <div className={'controlRow'}>
-          <span>note: anonymously created images cannot be added
-            to the gallery and will be lost when this page reloads.
-            login to enable saving the images to your account
-            or gallery</span>
-        </div>
-      )}
     </div>
   );
 };
