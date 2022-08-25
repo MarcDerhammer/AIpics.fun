@@ -97,7 +97,8 @@ const Home = () => {
                 name: 'you'
               }}
               onDelete={() => {
-                setImageId([]);
+                // filter out this Id from the list
+                setImageId(imageId.filter((i) => i !== id));
               }} />;
           })
         }
@@ -107,7 +108,7 @@ const Home = () => {
         <h2 className="thinking">🤔</h2>
       }
       {
-        imageId && (<div className="flash" />)
+        imageId && imageId.length > 0 && (<div className="flash" />)
       }
       {
         !generating && !imageId && (
