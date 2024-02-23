@@ -24,7 +24,7 @@ const Home = () => {
     setGenerating(true);
     try {
       setImageId([]);
-      const response = await fetch('https://dalle.marcapi.com/dalle/', {
+      const response = await fetch(process.env.REACT_APP_BASE_URL || '', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Home = () => {
       setPrompt(data.text);
       setRobotText('what do you want to see next?');
     } catch (error) {
-      setRobotText('there was a problem!  i have alerted the authorities');
+      setRobotText('there was a problem!');
       console.error(error);
       setImageId([]);
     } finally {
@@ -129,8 +129,8 @@ const Home = () => {
             <span>this site uses&nbsp;
               <a rel="noreferrer"
                 target="_blank"
-                href="https://github.com/replicate/cog-stable-diffusion">
-                Stable Diffusion</a>
+                href="https://openai.com/dall-e-3">
+                DALL·E 3</a>
               &nbsp;to convert text prompts into images</span>
             <span><br />by default, all images are private to you, but if
               you click the eyeball icon, they will be added to the public

@@ -1,11 +1,13 @@
+// dotenv
+import 'dotenv/config'
 import express from 'express';
 import bodyParser from 'body-parser';
 import axios from 'axios';
 import cors from 'cors';
 const app = express();
-import config from './config.js';
 import { supabaseAdmin } from './supabaseClient.js';
-const port = config.port;
+import { postPrompt } from './dalle.js';
+const port = process.env.port;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -40,55 +42,61 @@ app.post('/dalle', async (req, res) => {
         }
     }
 
-    const num_images = req.body.num_images;
-    if (!text || !num_images) {
-        console.log('no text or num_images');
+    if (!userId) {
+        return res.status(401).send('Please login!');
+    }
+
+    if (!text) {
+        console.log('no text');
         return res.status(400).send('Missing parameters');
     }
-    
+
     console.log('generating ' + text);
-    axios.post(config.endpointURL,
-        {
-            text,
-            num_images: 1,
-            api_key: config.apikey
-        }
-    ).then(async (response) => {
-        console.log('got response!');
-        if (!response.data) {
-            console.log('no data');
+
+    const promptResult = await postPrompt(text, userId);
+
+    if (!promptResult || promptResult.status >= 300) {
+        return res.status(500).send('Error');
+    }
+    console.log('prompt result', promptResult)
+    const urls = promptResult.data.map((d) => d.url);
+
+    let ids = [];
+
+    for (let i = 0; i < urls.length; i++) {
+        const imageUrl = urls[i];
+
+        // get the bytes from the image url
+        const imageBytes = await axios.get(imageUrl, {
+            responseType: 'arraybuffer',
+        });
+
+        const img = Buffer.from(imageBytes.data, 'binary');
+
+        const insert = await supabaseAdmin.from('image').insert({
+            creator: userId,
+            input: text,
+            public: false
+        });
+        const id = insert.data[0].id;
+        const imageUpload = await supabaseAdmin
+            .storage
+            .from('images')
+            .upload(id, img, {
+                cacheControl: '36000',
+                contentType: 'image/png'
+            });
+        if (imageUpload.error || !id) {
+            console.log('error uploading image');
             return res.status(500).send('Error');
         }
-        if (response.data) {
-            const img = Buffer.from(response.data.generatedImgs[0], 'base64');
-            const insert = await supabaseAdmin.from('image').insert({
-                creator: userId,
-                input: text,
-                public: false
-            });
-            const id = insert.data[0].id;
-            const imageUpload = await supabaseAdmin
-                .storage
-                .from('images')
-                .upload(id, img, {
-                    cacheControl: '36000',
-                    contentType: 'image/png'
-                });
-            if (imageUpload.error || !id) {
-                console.log('error uploading image');
-                return res.status(500).send('Error');
-            }
-            console.log('success');
-            return res.status(200).send({
-                id,
-                text,
-                creator: userId,
-            });
-        }
-        return res.status(500).send('Error');
-    }).catch(error => {
-        console.log(error);
-        return res.status(500).send('Error');
+        ids.push(id);
+    }
+    console.log('success');
+    return res.status(200).send({
+        ids,
+        text,
+        creator: userId,
     });
 }
 );
